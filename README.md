@@ -4,7 +4,7 @@ A React-based web application built around the **Strudel CC* music library
 --- 
 
 ## Assignment Video
-**Link: ** *<>*
+**Link** :  [Video](https://google.com)
 
 --- 
 
