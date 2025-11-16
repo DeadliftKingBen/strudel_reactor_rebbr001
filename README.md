@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+# 🎵 Strudel React Assignment  
+A React-based web application built around the **Strudel CC* music library
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+--- 
 
-## Available Scripts
+## Assignment Video
+**Link: ** *<>*
 
-In the project directory, you can run:
+--- 
 
-### `npm start`
+## Application Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### **1. Code preprocessor**
+This section allows you edit the raw strudel code directly.
+This allows you to write and experiment with your own musical creations
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### **2. Strudel REPL**
+This section allows you to view the live processes version of the strudel code.
+Every chanage made through: 
 
-### `npm test`
+-- Instrument Cards
+-- Audio Controls (tempo, gain, etc.)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Will be automatically reflected in this space in real time.
+This ensures that whatever your currently hearing, is relevant to the code you're seeing.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### **3. D3 Graph**
+A real time graph visualisation made through the D3 library
+This displays how the volume (gain) changes in real time as the music plays
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Audio Controls
 
-### `npm run eject`
+### **Play**
+Starts playing the music.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### **Stop**
+Stops playing the music.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### **Tempo**
+Adjusts the global tempo (cpm) of the music.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### **Volume Slider**
+Controls the global gain (volume) of the music.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+--- 
 
-## Learn More
+## Instrument Controls
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+You can add or remove instruments cards by either using the blue **+** button or the red **delete** button respectively
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Each card includes:
 
-### Code Splitting
+- An instrument name input
+- An ON Checkbox (Active)
+- A HUSH Checkbox (Muted)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+When **HUSH** is enabled, the instrument name in the strudel code is automaitcally muted with a prefixed _ 
+This change is applied immediately and can be heard in real time
 
-### Analyzing the Bundle Size
+--- 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## JSON Save / JSON Load
 
-### Making a Progressive Web App
+Located in the top left corner of the page, the Save/Load system allows you to save your audio configuration.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### **Save JSON**
+- Opens a popup asking for a preset name.
+- Saves the current strudel code + instrument card settings.
 
-### Advanced Configuration
+### **Load JSON**
+- Opens a popup listing all saved presets.
+- Allows you to load or delete any preset.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+This system makes it easy to store presets or reset to previous presets.
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Running The Application
 
-### `npm run build` fails to minify
+### **Requirements**
+- Node.js installed
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### **Setup Instructions**
+1. **Clone the repository**
+2. **Install all dependencies** : `npm install`
+3. **Start the Server** : `npm start`
+4. **Open the page in your browser**: `http://localhost:3000`
