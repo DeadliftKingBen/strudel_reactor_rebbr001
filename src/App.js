@@ -7,6 +7,7 @@ import EditorArea from './components/EditorArea';
 import StrudelPlayer from "./components/StrudelPlayer";
 import { useState, useRef, useEffect } from "react";
 import Swal from 'sweetalert2';
+import D3Graph from './components/D3Graph';
 
 export default function StrudelDemo() {
 
@@ -17,30 +18,14 @@ export default function StrudelDemo() {
     const [cpm, setCpm] = useState(120);
     // Volume (Gain) Edit
     const [volume, setVolume] = useState(0.5);
-
-    function handlePreprocess() {
-        const processed = strudelCode.replaceAll("<p1_Radio>", "_");
-        setStrudelCode(processed);
-    }
+    // Track instrument on and hush state
+    const [cardData, setCardData] = useState({});
 
     function handlePlay() {
         strudelRef.current?.evaluate();
     }
     function handleStop() {
         strudelRef.current?.stop();
-    }
-    function handleProcPlay() {
-        handlePreprocess();
-        strudelRef.current?.evaluate();
-    }
-
-    function handleProc() {
-        const replace = document.getElementById('flexRadioDefault2').checked ? "_" : "";
-        const processed = strudelCode.replaceAll("<p1_Radio>", replace);
-        setStrudelCode(processed);
-
-        strudelRef.current?.setCode(processed);
-        strudelRef.current?.evaluate();
     }
 
     // Updates the REPL when changes in the text preprocessor are entered
@@ -55,6 +40,22 @@ export default function StrudelDemo() {
         // Update gain()
         updatedCode = updatedCode.replace(/\.gain\([^)]*\)/g, `.gain(${volume})`);
 
+        // Add On and Hush logic
+        Object.values(cardData).forEach(({ instrument, mode }) => {
+            if (!instrument) {
+                return;
+            }
+            
+            // Use regex to determine instrument
+            const pattern = new RegExp(`\\b${instrument}\\b`, "g");
+
+            if (mode === "HUSH") {
+                updatedCode = updatedCode.replace(pattern, `_${instrument}`)
+            } else {
+                updatedCode = updatedCode.replace(new RegExp(`_${instrument}\\b`, "g"), instrument);
+            }
+        });
+
         setStrudelCode(updatedCode);
         strudelRef.current.setCode(updatedCode);
 
@@ -62,10 +63,10 @@ export default function StrudelDemo() {
         strudelRef.current.evaluate();
         }
     }
-    }, [cpm, volume]);
+    }, [cpm, volume, cardData]);
 
     return (
-        <div className="container-fluid main-container py-4 px-4">
+        <div className="container-fluid main-container py-12 px-4">
             <PageHeader 
                 strudelCode={strudelCode}
                 cpm={cpm}
@@ -98,8 +99,6 @@ export default function StrudelDemo() {
                             <AudioControls
                                 handlePlay={handlePlay}
                                 handleStop={handleStop}
-                                handlePreprocess={handlePreprocess}
-                                handleProcPlay={handleProcPlay}
                                 cpm={cpm}
                                 setCpm={setCpm}
                                 volume={volume}
@@ -109,7 +108,7 @@ export default function StrudelDemo() {
                     </div>
                 </div>
                 <div className="col-md-7 col-sm-10">
-                    <div className="card h-100">
+                    <div className="card mb-3">
                         <div className="card-header text-white">
                             Strudel Player
                         </div>
@@ -120,19 +119,27 @@ export default function StrudelDemo() {
                             />
                         </div>
                     </div>
+                    <div className="card">
+                        <div className="card-header text-white">
+                            D3 Graph
+                        </div>
+                        <div className="card-body">
+                            <D3Graph/>
+                        </div>
+                    </div>
                 </div>
                 <div className="col-md-5 col-sm-10">
-                    <div className="card h-100">
+                    <div className="card">
                         <div className="card-header text-white">
                             Editor Area
                         </div>
                         <div className="card-body d-flex align-items-center justify-content-center">
-                            <EditorArea onProc={handleProc}/>
+                            <EditorArea cardData={cardData} setCardData={setCardData}/>
                         </div>
                     </div>
                 </div>
             </div>
-            <canvas id="roll"></canvas>
+            <canvas id="roll" hidden></canvas>
         </div>
     );
 }
